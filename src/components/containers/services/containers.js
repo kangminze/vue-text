@@ -28,7 +28,8 @@ export default {
           key: 'status'
         }
       ],
-      tableData: []
+      tableData: [],
+      selection: []
     }
   },
   mounted(){
@@ -55,11 +56,41 @@ export default {
         method: 'GET',
         url: Vue.api.root + '/containers/json'
       }).then(function (response) {
-        console.info(response.data)
+        console.info(response.data);
         this.tableData = response.data.data
       }, function (response) {
 
       })
+    },
+    start: function () {
+      if (this.selection.length === 0){
+        console.info("没有选中不能提交")
+        return;
+      }
+      var params = {};
+      let containerIds = [];
+      this.selection.forEach(item => {
+        containerIds.push(item.id);
+      });
+      params["ids"] = containerIds;
+      this.$http.post(Vue.api.root + "/containers/start",
+        params
+      ).then(function (response) {
+        console.info(response.data)
+      }, function (response) {
+
+      })
+
+    },
+    onselect: function (selection, row) {
+      this.selection = selection
+    },
+    onselectionchange: function (selection) {
+      console.info(selection);
+      this.selection = selection
+    },
+    conselectall: function (selection) {
+      this.selection = selection
     }
 
   }
