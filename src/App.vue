@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app">
+  <div id="app">
     <transition name="bounce">
       <router-view></router-view>
     </transition>
@@ -25,7 +25,4 @@
     color: #2c3e50;
   }
 
-  .app {
-    margin: 10px;
-  }
 </style>
